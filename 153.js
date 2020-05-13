@@ -8,28 +8,31 @@
 
 const pool = [1,2,3,4,5,6,7,8];
 
+
+function fetch(param){
+  return new Promise(resolve => {
+    console.log(`start request ${param}`);
+    setTimeout(() => {
+      console.log(`end request ${param}`);
+      resolve(param);
+    }, Math.random()*2000);
+  });
+}
+function Fetch(num,param){
+  return fetch(param).then(res=>{
+    res
+  }).catch(err=>{
+    err
+  })
+}
+const callback = () => {
+  console.log('run callback');
+};
+
 function PromiseMaxNum(num, pool){
-
-  function fetch(param){
-    return new Promise(resolve => {
-      console.log(`start request ${param}`);
-      setTimeout(() => {
-        console.log(`end request ${param}`);
-        resolve(param);
-      }, Math.random()*2000);
-    });
-  }
-  function Fetch(param){
-    return fetch(param).then(res=>{
-      res
-    }).catch(err=>{
-      err
-    })
-  }
-
   let new_pool = pool.filter((value,index) => {
     if(index < num){
-      return Fetch(num, pool.splice(num, len)])
+      return Fetch(num, value)
     }
   })
 
@@ -39,9 +42,8 @@ function PromiseMaxNum(num, pool){
     console.log('response: ', response);
   })
 }
-const callback = () => {
-  console.log('run callback');
-};
+
+// PromiseMaxNum(3, pool, callback)
 
 //它是新建一个队列
 function handlerequest( max, pool,){
@@ -61,4 +63,28 @@ function handlerequest( max, pool,){
   handleRequest(pool[i])
 }
 
-PromiseMaxNum(3, pool, callback)
+const sendRequest = (urls, max, callback)=>{
+  let finished = 0;
+  const total = urls.length;
+  const handler  = ()=> {
+    if(urls.length){
+      const url = urls.shift();
+      fetch(url).then(()=>{
+        finished ++ ;
+        handler();
+      }).catch(e=>{
+        finished ++ ;
+        throw Error(e)
+      })
+    }
+
+    if(finished >= total){
+      callback()
+    }
+  }
+  for(let i= 0; i< max; i++){
+    handler()
+  }
+}
+
+sendRequest(pool, 3, callback)
