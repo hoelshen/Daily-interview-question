@@ -51,7 +51,6 @@ function handlerequest( max, pool,){
   const count = 0;
   const urlCount = pool.length;
   const handleRequest =  fetch(url).then((res)=>{
-
     count++
   }).catch(err=>{
     count++
