@@ -6,12 +6,17 @@ function toTree(arr) {
     tree[name] = arr[i];
   }
   for (let i in tree) {
-    if (tree[i]['parent_id']) {
-      tree[tree[i]['parent_id']][i] = tree[i];
-      delete tree[i]['parent_id'];
+    if (tree[i]['parent_ind']) {
+      console.log('sad', tree[i])
+      tree[tree[i]['parent_ind']][i] = tree[i];
+
+      delete tree[i]['parent_ind'];
     }
   }
+  console.log('tree', tree)
+
   for (const key in tree) {
+    console.log('key: ', key);
     return {
       [key]: tree[key]
     };
