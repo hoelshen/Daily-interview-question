@@ -26,8 +26,7 @@ const request = async (
   console.log('withOutLock', opts.withOutLock)
   if(opts.withOutLock){
     const res = await mockRequest(`${name} - withOutLock`)
-    console.log(res)
-    return
+    return 
   }
   console.log('lock.runing', lock.runing);
   if(lock.runing){
@@ -48,13 +47,13 @@ const request = async (
     if (opts.hasErr) {
       lock.wait = mockRequest("关键请求异常处理", 4000);
     } else {
-      console.log(res);
       return;
     }
   }
   
   // 等待模拟关键请求失败的处理
-  console.log('lock.wait: ', lock.wait);
+  console.log('lock.wait: ', lock.wait, );
+  console.log('🍎🍎🍎'. res)
   if (lock.wait) {
     console.log(`等待关键请求异常处理中...`);
     await lock.wait;
@@ -63,10 +62,8 @@ const request = async (
     console.log(`关键请求异常处理完成`);
   }
   const res = await mockRequest(name);
-
-  console.log('233res', res);
   
-  return;
+  return ;
 }
 
 
