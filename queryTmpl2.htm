@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+    <title>测试jQuery-tmpl的使用</title>
+</head>
+<body>
+<div id="div_each"></div>
+</body>
+<!-- 模板1，测试${}、{{=}}标签的使用 -->
+
+<!-- {{each}}标签的使用 -->
+<script id="each" type="text/x-jquery-tmpl"> 
+  <h3>users</h3>
+  {{each(i,user) users}}
+      <div>${i+1}:${user.name}</div>
+  {{/each}}
+  <h3>depart</h3>
+  {{each departs}}
+      <div>{{= $value.name}}</div>
+  {{/each}}
+</script>
+
+
+<script type="text/javascript">
+	var eachData = {
+		users : [ {
+			name : 'xiaoming'
+		}, {
+			name : 'xiaowang'
+		} ],
+		departs : [ {
+			name : 'IT'
+		}, {
+			name : 'test'
+		} ]
+	};
+	$("#each").tmpl(eachData).appendTo('#div_each');
+</script>
+
+
+</html>
